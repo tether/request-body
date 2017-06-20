@@ -1,0 +1,27 @@
+
+{
+  "name": "request-content",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tether/request-content.git"
+  },
+  "keywords": [
+    "tether"
+  ],
+  "author": "Petrofeed Inc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tether/request-content/issues"
+  },
+  "homepage": "https://github.com/tether/request-content#readme",
+  "devDependencies": {
+    "tape": "*"
+  }
+}
+  
