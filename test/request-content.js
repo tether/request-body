@@ -22,9 +22,12 @@ test('should parse url encoded stream', assert => {
 
 function urlencoded () {
   const stream = new Readable
+  stream.headers = {}
+  stream.headers['content-type'] = 'application/x-www-form-urlencoded'
   stream._read = () => {}
   stream.push('name=olivier&city=calgary')
   setTimeout(() => stream.push(null), 300)
+  return stream
 }
 
 
