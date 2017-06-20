@@ -13,7 +13,7 @@
   "keywords": [
     "tether"
   ],
-  "author": "Petrofeed Inc",
+  "author": "Olivier Wietrich, PetroFeed Inc",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/tether/request-content/issues"
