@@ -20,8 +20,7 @@ module.exports = function (req, cb) {
       const buffer = Buffer.concat(list)
       cb(query(buffer.toString()))
     })
-    req.on('finish', () => {
-      console.log('FINISH')
-    })
   }
+
+  //multipart/form-data
 }
