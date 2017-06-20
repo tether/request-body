@@ -8,8 +8,10 @@ const Form = require('multiparty').Form
 
 
 /**
- * This is a simple description.
+ * Decode HTTP request data.
  *
+ * @param {IncomingHttpResponse} req
+ * @param {Function} cb
  * @api public
  */
 
