@@ -27,7 +27,7 @@ module.exports = function (req, cb) {
   } else if (type === 'multipart/form-data') {
     (new Form()).parse(req, function(err, fields, files) {
       const obj = {}
-      Object.keys(fields).map(key => obj[key] = fields[key][0])
+      if (fields) Object.keys(fields).map(key => obj[key] = fields[key][0])
       cb(obj)
     })
   }
