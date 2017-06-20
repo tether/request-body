@@ -4,16 +4,27 @@
  */
 
 const test = require('tape')
+const content = require('..')
+const Readable = require('stream').Readable
 
 
-test('should be a stream', assert => {
+test('should parse url encoded stream', assert => {
   assert.plan(1)
-  assert.equal(1 + 2, 3)
+  const req = urlencoded()
+  content(req, data => {
+    assert.deepEqual(data, {
+      name: 'olivier',
+      city: 'calgary'
+    })
+  })
 })
 
 
 function urlencoded () {
-
+  const stream = new Readable
+  stream._read = () => {}
+  stream.push('name=olivier&city=calgary')
+  setTimeout(() => stream.push(null), 300)
 }
 
 
