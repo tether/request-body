@@ -6,59 +6,49 @@
 const test = require('tape')
 const content = require('..')
 const Readable = require('stream').Readable
+const http = require('http')
+const request = require('request')
+const net = require('net')
 
 
 test('should parse url encoded stream', assert => {
   assert.plan(1)
-  const req = urlencoded()
-  content(req, data => {
-    assert.deepEqual(data, {
-      name: 'olivier',
-      city: 'calgary'
-    })
+  const urlencoded = {
+    name: 'olivier',
+    city: 'calgary'
+  }
+  server({
+    form: urlencoded
+  }, (data) => {
+    assert.deepEqual(data, urlencoded)
   })
 })
+
 
 test('should parse multipart form data stream', assert => {
   assert.plan(1)
-  const req = multipart()
-  content(req, data => {
-    assert.deepEqual(data, {
-      name: 'olivier',
-      city: 'calgary'
-    })
+  const formData = {
+    name: 'olivier',
+    city: 'calgary'
+  }
+  server({
+    formData: formData
+  }, (data) => {
+    assert.deepEqual(data, formData)
   })
 })
 
 
-
-function urlencoded () {
-  const stream = new Readable
-  stream.headers = {}
-  stream.headers['content-type'] = 'application/x-www-form-urlencoded'
-  stream._read = () => {}
-  stream.push('name=olivier&city=calgary')
-  setTimeout(() => stream.push(null), 300)
-  return stream
-}
-
-
-function multipart () {
-  const stream = new Readable
-  stream.headers = {}
-  stream.headers['content-type'] = 'application/x-www-form-urlencoded'
-  stream._read = () => {}
-  stream.push(`
-----------------------------775505419069973009346433
-Content-Disposition: form-data; name="name"
-
-olivier
-----------------------------775505419069973009346433
-Content-Disposition: form-data; name="city"
-
-calgary
-----------------------------775505419069973009346433--
-  `)
-  setTimeout(() => stream.push(null), 300)
-  return stream
+function server (data, cb) {
+  const server = http.createServer((req, res) => {
+    content(req, cb)
+    res.end()
+  }).listen(() => {
+    const port = server.address().port
+    const sock = net.connect(port)
+    request.post(`http://localhost:${port}`, data, () => {
+      sock.end();
+      server.close();
+    })
+  })
 }

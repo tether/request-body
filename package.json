@@ -20,9 +20,11 @@
   },
   "homepage": "https://github.com/tether/request-content#readme",
   "devDependencies": {
+    "request": "^2.81.0",
     "tape": "*"
   },
   "dependencies": {
-    "content-type": "^1.0.2"
+    "content-type": "^1.0.2",
+    "multiparty": "^4.1.3"
   }
 }
