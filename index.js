@@ -8,6 +8,14 @@ const Form = require('multiparty').Form
 
 
 /**
+ * Allowed method for request Content-type
+ * @type {Array}
+ */
+
+const allowed = ['POST', 'PUT']
+
+
+/**
  * Decode HTTP request data.
  *
  * @param {IncomingHttpResponse} req
@@ -16,6 +24,7 @@ const Form = require('multiparty').Form
  */
 
 module.exports = function (req, cb) {
+  if (!~allowed.indexOf(req.method)) return cb()
   const type = parse(req).type
   if (type === 'application/x-www-form-urlencoded') {
     let list = []

@@ -39,14 +39,22 @@ test('should parse multipart form data stream', assert => {
 })
 
 
-function server (data, cb) {
+test('should not do anything for method other than post or put', assert => {
+  assert.plan(1)
+  server({}, (data) => {
+    assert.ok(data == null)
+  }, 'get')
+})
+
+
+function server (data, cb, method) {
   const server = http.createServer((req, res) => {
     content(req, cb)
     res.end()
   }).listen(() => {
     const port = server.address().port
     const sock = net.connect(port)
-    request.post(`http://localhost:${port}`, data, () => {
+    request[method || 'post'](`http://localhost:${port}`, data, () => {
       sock.end();
       server.close();
     })
