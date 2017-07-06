@@ -5,7 +5,7 @@
 [![Downloads](https://img.shields.io/npm/dm/request-content.svg)](http://npm-stat.com/charts.html?package=request-content)
 [![guidelines](https://tether.github.io/contribution-guide/badge-guidelines.svg)](https://github.com/tether/contribution-guide)
 
-Decode HTTP request data according its content type.
+Decode HTTP body according POST and PUT request content types.
 
 ## Usage
 
