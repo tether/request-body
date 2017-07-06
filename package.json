@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/tether/request-content#readme",
   "devDependencies": {
-    "request": "^2.81.0",
+    "server-test": "^1.1.1",
     "tape": "*"
   },
   "dependencies": {
