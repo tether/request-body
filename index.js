@@ -25,7 +25,11 @@ const allowed = ['POST', 'PUT']
 
 module.exports = function (req, cb) {
   if (!~allowed.indexOf(req.method)) return cb()
-  const type = parse(req).type
+  try {
+    const type = parse(req).type
+  } catch (e) {
+    cb({})
+  }
   if (type === 'application/x-www-form-urlencoded') {
     let list = []
     req.on('data', (chunk) => list.push(chunk))
