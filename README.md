@@ -5,7 +5,7 @@
 [![Downloads](https://img.shields.io/npm/dm/request-body.svg)](http://npm-stat.com/charts.html?package=request-body)
 [![guidelines](https://tether.github.io/contribution-guide/badge-guidelines.svg)](https://github.com/tether/contribution-guide)
 
-Parse HTTP request body according its content-type. Support application/json, x-www-form-urlencoded, text/plain, mulitipart/form-data mime types.
+Inspired by [body-parser](https://github.com/expressjs/body-parser) and [co-body](https://github.com/cojs/co-body), this module parse HTTP requests and return the body request according its content-type. Support application/json, x-www-form-urlencoded, text/plain as well as mulitipart/form-data mime types.
 
 ## Usage
 
