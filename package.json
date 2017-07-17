@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tether/request-content.git"
+    "url": "git+https://github.com/tether/request-body.git"
   },
   "keywords": [
     "request",
@@ -19,9 +19,9 @@
   "author": "Olivier Wietrich, PetroFeed Inc",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tether/request-content/issues"
+    "url": "https://github.com/tether/request-body/issues"
   },
-  "homepage": "https://github.com/tether/request-content#readme",
+  "homepage": "https://github.com/tether/request-body#readme",
   "devDependencies": {
     "server-test": "^1.1.1",
     "supertest": "^3.0.0",
