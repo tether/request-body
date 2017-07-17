@@ -1,11 +1,11 @@
-# Request-Content
+# Request-Body
 
-[![Build Status](https://travis-ci.org/tether/request-content.svg?branch=master)](https://travis-ci.org/tether/request-content)
-[![NPM](https://img.shields.io/npm/v/request-content.svg)](https://www.npmjs.com/package/request-content)
-[![Downloads](https://img.shields.io/npm/dm/request-content.svg)](http://npm-stat.com/charts.html?package=request-content)
+[![Build Status](https://travis-ci.org/tether/request-body.svg?branch=master)](https://travis-ci.org/tether/request-body)
+[![NPM](https://img.shields.io/npm/v/request-body.svg)](https://www.npmjs.com/package/request-body)
+[![Downloads](https://img.shields.io/npm/dm/request-body.svg)](http://npm-stat.com/charts.html?package=request-body)
 [![guidelines](https://tether.github.io/contribution-guide/badge-guidelines.svg)](https://github.com/tether/contribution-guide)
 
-Decode HTTP body according POST and PUT request content types.
+Parse HTTP request body according its content-type. Support application/json, x-www-form-urlencoded, text/plain, mulitipart/form-data mime types.
 
 ## Usage
 
@@ -13,23 +13,26 @@ Here's an example of a simple HTTP server.
 
 ```js
 const http = require('http')
-const content = require('request-content')
+const content = require('request-body')
 
 
 http.createServer((req, res) => {
-  content(req, data => {
-    // do something
+  body(req, options).then(data => {
+    // do something with data
   })
 })
 ```
 
+
+Options are the same passed to the module [inflate-body](https://github.com/tether/inflate-body) as well as [multiparty](https://github.com/pillarjs/multiparty).
+
 ## Installation
 
 ```shell
-npm install request-content --save
+npm install request-body --save
 ```
 
-[![NPM](https://nodei.co/npm/request-content.png)](https://nodei.co/npm/request-content/)
+[![NPM](https://nodei.co/npm/request-body.png)](https://nodei.co/npm/request-body/)
 
 
 ## Question
