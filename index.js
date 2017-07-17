@@ -23,7 +23,7 @@ const mimes = {
  */
 module.exports = function (req, options) {
   const hasBody = typeis.hasBody(req)
-  const type = typis(req, ['urlencoded', 'json', 'text', 'multipart'])
+  const type = typeis(req, ['urlencoded', 'json', 'text', 'multipart'])
   return new Promise((resolve, reject) => {
     if (!hasBody) {
       resolve({})
