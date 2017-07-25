@@ -21,7 +21,7 @@ const mimes = {
  * @return {Promise}
  * @api public
  */
-module.exports = function (req, options) {
+module.exports = function (req, options = {}) {
   const hasBody = typeis.hasBody(req)
   const type = typeis(req, ['urlencoded', 'json', 'text', 'multipart'])
   return new Promise((resolve, reject) => {

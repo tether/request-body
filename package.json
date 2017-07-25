@@ -1,6 +1,6 @@
 {
   "name": "request-body",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Parse HTTP request body according its content type",
   "main": "index.js",
   "scripts": {
