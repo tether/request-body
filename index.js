@@ -66,6 +66,11 @@ function multipart (req, options) {
 
 function map (fields) {
   const obj = {}
-  if (fields) Object.keys(fields).map(key => obj[key] = fields[key][0])
+  if (fields) Object.keys(fields).map(key => {
+    const value = fields[key]
+    obj[key] = value.length > 1
+      ? value
+      : value[0]
+  })
   return obj
 }
