@@ -49,8 +49,13 @@ function multipart (req, options) {
   const form = new Form()
   return new Promise((resolve, reject) => {
     form.parse(req, (err, fields, files) => {
-      if (err) reject(err)
-      else resolve(map(fields))
+      if (err) {
+        reject(err)
+      } else {
+        const obj = map(fields)
+        obj.files = files
+        resolve(obj)
+      }
     })
   })
 }
