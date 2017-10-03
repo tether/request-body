@@ -48,34 +48,41 @@ module.exports = function (req, options = {}) {
 function multipart (req, options) {
   const form = new Form()
   return new Promise((resolve, reject) => {
-    form.parse(req, (err, fields, files) => {
-      if (err) {
-        reject(err)
-      } else {
-        const obj = map(fields)
-        obj.files = files
-        resolve(obj)
-      }
+    const result = {}
+    form.on('field', (name, value) => {
+      result[name] = add(result, name, value)
     })
+    form.on('part', part => {
+      if (part.filename) {
+        const name = part.name
+        result[name] = add(result, name, part)
+        part.resume()
+      }
+      part.on('error', reject)
+    })
+    form.on('close', () => resolve(result))
+    form.on('error', reject)
+    form.parse(req)
   })
 }
 
 
 /**
- * Create object from a form data fields.
+ * Return value of array of values.
  *
- * @param {Object}fields
- * @return {Object}
+ * @param {Object} obj
+ * @param {String} name
+ * @param {Any} value
+ * @return {Any|Array}
  * @api private
  */
 
-function map (fields) {
-  const obj = {}
-  if (fields) Object.keys(fields).map(key => {
-    const value = fields[key]
-    obj[key] = value.length > 1
-      ? value
-      : value[0]
-  })
-  return obj
+
+function add (obj, name, value) {
+  const previous = obj[name]
+  if (previous) {
+    const arr = [].concat(previous)
+    arr.push(value)
+    return arr
+  } else return value
 }
