@@ -3,6 +3,7 @@
  */
 
 const typeis = require('type-is')
+const stream = require('stream')
 const FormData = require('BusBoy')
 const mimes = {
   'urlencoded': require('request-form'),
@@ -52,7 +53,9 @@ function multipart (req, options) {
       headers: req.headers
     })
     form.on('file', (name, file, filename) => {
-      result[name] = file
+      const duplex = new stream.PassThrough()
+      result[name] = duplex
+      file.pipe(duplex)
     })
     form.on('field', (name, value) => {
       result[name] = value
