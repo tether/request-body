@@ -52,14 +52,14 @@ function multipart (req, options) {
       headers: req.headers
     })
     form.on('file', (name, file, filename) => {
-      console.log(name, value)
       result[name] = file
     })
     form.on('field', (name, value) => {
       result[name] = value
     })
+    form.on('error', reject)
     form.on('finish', () => resolve(result))
-    form.pipe(req)
+    req.pipe(form)
   })
 }
 
