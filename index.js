@@ -3,7 +3,7 @@
  */
 
 const typeis = require('type-is')
-const Form = require('multiparty').Form
+const FormData = require('BusBoy')
 const mimes = {
   'urlencoded': require('request-form'),
   'json': require('request-application'),
@@ -46,23 +46,20 @@ module.exports = function (req, options = {}) {
  */
 
 function multipart (req, options) {
-  const form = new Form()
+  const result = {}
   return new Promise((resolve, reject) => {
-    const result = {}
+    const form = new FormData({
+      headers: req.headers
+    })
+    form.on('file', (name, file, filename) => {
+      console.log(name, value)
+      result[name] = file
+    })
     form.on('field', (name, value) => {
-      result[name] = add(result, name, value)
+      result[name] = value
     })
-    form.on('part', part => {
-      if (part.filename) {
-        const name = part.name
-        result[name] = add(result, name, part)
-        part.resume()
-      }
-      part.on('error', reject)
-    })
-    form.on('close', () => resolve(result))
-    form.on('error', reject)
-    form.parse(req)
+    form.on('finish', () => resolve(result))
+    form.pipe(req)
   })
 }
 
