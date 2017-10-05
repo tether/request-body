@@ -4,7 +4,7 @@
 
 const typeis = require('type-is')
 const stream = require('stream')
-const FormData = require('BusBoy')
+const FormData = require('busboy')
 const mimes = {
   'urlencoded': require('request-form'),
   'json': require('request-application'),
