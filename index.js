@@ -4,7 +4,7 @@
 
 const typeis = require('type-is')
 const stream = require('stream')
-const FormData = require('busboy')
+const Busboy = require('busboy')
 const mimes = {
   'urlencoded': require('request-form'),
   'json': require('request-application'),
@@ -49,18 +49,26 @@ module.exports = function (req, options = {}) {
 function multipart (req, options) {
   const result = {}
   return new Promise((resolve, reject) => {
-    const form = new FormData({
-      headers: req.headers
-    })
-    form.on('file', (name, file, filename) => {
-      const duplex = new stream.PassThrough()
-      result[name] = duplex
-      file.pipe(duplex)
-    })
-    form.on('field', (name, value) => {
-      result[name] = value
-    })
-    form.on('error', reject)
+    var form = new Busboy({ headers: req.headers })
+    form.on('file', function(fieldname, file, filename, encoding, mimetype) {
+      const value = result[fieldname]
+      const duplex = new stream.Readable()
+      duplex.filename = filename
+      duplex.encoding = encoding
+      duplex.mimetype = mimetype
+      duplex._read = () => {}
+      result[fieldname] =  value
+        ? [].concat(value, duplex)
+        : duplex
+      file.on('data', data => duplex.push(data))
+      file.on('end', () => duplex.push(null))
+    });
+    form.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+      const value = result[fieldname]
+      result[fieldname] = value
+        ? [].concat(value, val)
+        : val
+    });
     form.on('finish', () => resolve(result))
     req.pipe(form)
   })
